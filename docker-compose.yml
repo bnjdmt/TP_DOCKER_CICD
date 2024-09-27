@@ -1,0 +1,59 @@
+services:
+  db:
+    image: postgres
+    container_name: local_pgdb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    container_name: local_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - local_redisdata:/path/to/local/dаta:/root/redis
+    environment:
+      REDIS_PASSWORD: redis
+      REDIS_PORT: 6379
+      REDIS_DATABASES: 16
+
+  vote:
+    build:
+      context: ./vote
+      dockerfile: Dockerfile
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
+
+  result:
+    build:
+      context: ./result
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: resultdb
+    depends_on:
+      - db
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - db
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  local_pgdata:
+  local_redisdata:
