@@ -37,6 +37,7 @@ jobs:
 
       # 5. Installation des dépendances Python
       - name: Install Python dependencies
+        working-directory: ./vote
         run: pip install -r requirements.txt
 
       # 6. Mise en cache des dépendances .NET
