@@ -49,12 +49,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dotnet-
 
+      # 7. Installation des dépendances .NET (NuGet)
+      - name: Restore .NET dependencies
+        working-directory: ./worker
+        run: dotnet restore <my project>
+
       # 8. Build du projet .NET
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '3.1.x'
-      - run: dotnet build <my project>
+        run: dotnet build <my project>
 
       - name: Log in to DockerHub
         uses: docker/login-action@v1
