@@ -17,4 +17,4 @@ WORKDIR /app
 COPY --from=build /out .
 
 # Lancer l'application Worker
-CMD ["dotnet", "worker.dll"]
+CMD ["dotnet", "Worker.dll"]
