@@ -10,51 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout du code source
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      # 2. Mise en cache des dépendances npm
-      - name: Cache Node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # 3. Installation des dépendances Node.js
-      - name: Install Node.js dependencies
-        working-directory: ./result
-        run: npm install
-
-      # 4. Mise en cache des dépendances Python
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
-          cache: 'pip'
-
-      # 5. Installation des dépendances Python
-      - name: Install Python dependencies
-        working-directory: ./vote
-        run: pip install -r requirements.txt
-
-      # 6. Mise en cache des dépendances dotnet
-      - name: Cache .NET packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-dotnet-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-dotnet-
-
-      # 7. Build du projet .NET
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '3.1.x'
-      - run: dotnet build Tp/worker/src/Worker/Worker.csproj
 
       - name: Log in to DockerHub
         uses: docker/login-action@v1
