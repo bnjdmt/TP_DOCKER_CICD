@@ -54,7 +54,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '3.1.x'
-      - run: dotnet build Worker.csproj
+      - run: |
+          cd ../worker/Worker/Worker.csproj
+          dotnet build
 
       - name: Log in to DockerHub
         uses: docker/login-action@v1
