@@ -25,7 +25,8 @@ jobs:
 
       # 3. Installation des dépendances Node.js
       - name: Install Node.js dependencies
-        run: npm install
+        working-directory: ./vote
+        run: npm ci
 
       # 4. Mise en cache des dépendances Python
       - name: Set up Python
