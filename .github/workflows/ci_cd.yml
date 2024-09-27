@@ -40,7 +40,7 @@ jobs:
         working-directory: ./vote
         run: pip install -r requirements.txt
 
-      # 6. Mise en cache des dépendances .NET
+      # 6. Mise en cache des dépendances dotnet
       - name: Cache .NET packages
         uses: actions/cache@v2
         with:
@@ -49,12 +49,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dotnet-
 
-      # 7. Installation des dépendances .NET (NuGet)
-      - name: Restore .NET dependencies
-        working-directory: ./worker
-        run: dotnet restore <my project>
-
-      # 8. Build du projet .NET
+      # 7. Build du projet .NET
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
